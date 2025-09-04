@@ -1,98 +1,518 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Housing Listings - Campus Cribs</title>
+    <title>House Listings - Campus Cribs</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
+
 <body>
     <!-- Header -->
-    <header>
-        <nav class="navbar navbar-expand-lg container">
-            <a href="index.html" class="navbar-brand fw-bold text-white">Campus Cribs</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navMenu">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 nav-links">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#search">Find Housing</a></li>
-                    <li><a href="listings">Listings</a></li>
-                    <li><a href="about">About Us</a></li>
-                    <li><a href="#" id="auth-button">Login/Sign Up</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
+    <header class="gradient-bg fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-dark container">
+            <div class="container-fluid">
+                <a href="index.html" class="navbar-brand fw-bold logo">Campus Cribs</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navMenu">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="listings.html">House Listings</a></li>
+                        <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#" id="auth-button">Login/Sign Up</a></li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>
 
-    <!-- Listings Content -->
-    <section class="hero">
-        <div class="container">
-            <h1>Housing Listings</h1>
-            <p>Find your perfect accommodation near FUTA</p>
+    <!-- Authentication Modal -->
+    <div class="modal fade" id="authModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Authentication</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="nav nav-tabs auth-tabs mb-3" id="authTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab">Login</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="signup-tab" data-bs-toggle="tab" data-bs-target="#signup" type="button" role="tab">Sign Up</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="authTabsContent">
+                        <div class="tab-pane fade show active" id="login" role="tabpanel">
+                            <h3 class="text-center mb-4">Login to Your Account</h3>
+                            <form id="login-form">
+                                <div class="mb-3">
+                                    <label for="login-email" class="form-label">Email or Username</label>
+                                    <input type="text" class="form-control" id="login-email" name="email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="login-password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="login-password" name="password" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Login</button>
+                                <p class="text-center mt-3">Don't have an account? <a href="#" id="switch-to-signup">Sign up</a></p>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="signup" role="tabpanel">
+                            <h3 class="text-center mb-4">Create an Account</h3>
+                            <form id="signup-form">
+                                <div class="mb-3">
+                                    <label for="fullname" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="fullname" name="fullname" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="username" name="username" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="address" class="form-label">Address</label>
+                                    <input type="text" class="form-control" id="address" name="address">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Phone Number</label>
+                                    <input type="tel" class="form-control" id="phone" name="phone" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="student-status" class="form-label">Student Status</label>
+                                    <select class="form-select" id="student-status" name="student-status" required>
+                                        <option value="">Select Status</option>
+                                        <option value="fresher">Fresher</option>
+                                        <option value="returning">Returning Student</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="pref-location" class="form-label">Preferred Location</label>
+                                    <select class="form-select" id="pref-location" name="pref-location">
+                                        <option value="">Select Location</option>
+                                        <option value="south-gate">South Gate Area</option>
+                                        <option value="north-gate">North Gate Area</option>
+                                        <option value="west-gate">West Gate Area</option>
+                                        <option value="town">Town Area</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="budget-range" class="form-label">Budget Range (₦/year)</label>
+                                    <select class="form-select" id="budget-range" name="budget-range">
+                                        <option value="">Select Budget</option>
+                                        <option value="100000">Up to ₦100,000</option>
+                                        <option value="200000">Up to ₦200,000</option>
+                                        <option value="300000">Up to ₦300,000</option>
+                                        <option value="500000">Up to ₦500,000</option>
+                                        <option value="1000000">Above ₦500,000</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="room-pref" class="form-label">Room Type Preference</label>
+                                    <select class="form-select" id="room-pref" name="room-pref">
+                                        <option value="">Select Preference</option>
+                                        <option value="single">Single Room</option>
+                                        <option value="selfcon">A Room Self Con</option>
+                                        <option value="room-parlor">Room and Parlor</option>
+                                        <option value="apartment">1 Bedroom Apartment</option>
+                                        <option value="2bedroom">2 Bedroom Apartment</option>
+                                        <option value="3bedroom">3 Bedroom Apartment</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="signup-password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="signup-password" name="password" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="confirm-password" class="form-label">Confirm Password</label>
+                                    <input type="password" class="form-control" id="confirm-password" name="confirm-password" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+                                <p class="text-center mt-3">Already have an account? <a href="#" id="switch-to-login">Login</a></p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Header -->
+    <section class="page-header gradient-bg text-white py-5 mt-5">
+        <div class="container text-center">
+            <h1 class="mb-3">Find Your Perfect Home</h1>
+            <p class="lead">Browse our verified housing listings near FUTA</p>
         </div>
     </section>
 
-    <section class="features">
+    <!-- Search Filters -->
+    <section class="section-padding bg-light">
         <div class="container">
-            <h2 class="section-title">Available Properties</h2>
-            <div class="text-center">
-                <p>No housing listings available at the moment.</p>
-                <p>Check back later for verified housing options.</p>
-                <a href="index.html#search" class="cta-button">Search Again</a>
+            <div class="card search-box shadow border-0">
+                <div class="card-body p-4">
+                    <h3 class="mb-4">Find Your Ideal Space</h3>
+                    <form class="row g-3">
+                        <div class="col-md-3">
+                            <label for="location-filter" class="form-label">Location</label>
+                            <select class="form-select" id="location-filter">
+                                <option value="">All Locations</option>
+                                <option value="south-gate">South Gate Area</option>
+                                <option value="north-gate">North Gate Area</option>
+                                <option value="west-gate">West Gate Area</option>
+                                <option value="town">Town Area</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="type-filter" class="form-label">Room Type</label>
+                            <select class="form-select" id="type-filter">
+                                <option value="">All Types</option>
+                                <option value="single">Single Room</option>
+                                <option value="selfcon">A Room Self Con</option>
+                                <option value="room-parlor">Room and Parlor</option>
+                                <option value="apartment">1 Bedroom Apartment</option>
+                                <option value="2bedroom">2 Bedroom Apartment</option>
+                                <option value="3bedroom">3 Bedroom Apartment</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="price-filter" class="form-label">Max Price (₦/year)</label>
+                            <select class="form-select" id="price-filter">
+                                <option value="">Any Price</option>
+                                <option value="100000">Up to ₦100,000</option>
+                                <option value="200000">Up to ₦200,000</option>
+                                <option value="300000">Up to ₦300,000</option>
+                                <option value="500000">Up to ₦500,000</option>
+                                <option value="1000000">Above ₦500,000</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">&nbsp;</label>
+                            <button type="submit" class="btn btn-primary w-100 py-2">Search Properties</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer (same as main page) -->
-    <footer>
+    <!-- Listings Grid -->
+    <section class="section-padding bg-white">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Available Properties <span class="badge bg-primary">24</span></h2>
+                <div class="d-flex align-items-center">
+                    <span class="me-2">Sort by:</span>
+                    <select class="form-select form-select-sm w-auto">
+                        <option>Newest</option>
+                        <option>Price: Low to High</option>
+                        <option>Price: High to Low</option>
+                        <option>Most Popular</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <!-- Listing 1 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card listing-card h-100 shadow-sm border-0 overflow-hidden">
+                        <div class="position-relative">
+                            <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                                class="card-img-top" alt="Modern Self Contain"
+                                style="height: 200px; object-fit: cover;">
+                            <div class="position-absolute top-0 end-0 m-2">
+                                <span class="badge bg-success">Verified</span>
+                            </div>
+                            <div class="position-absolute top-0 start-0 m-2">
+                                <button class="btn btn-light btn-sm rounded-circle"><i
+                                        class="far fa-heart"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Modern Self Contain</h5>
+                            <p class="text-muted mb-2"><i class="fas fa-map-marker-alt me-2"></i>South Gate Area</p>
+
+                            <div class="d-flex justify-content-between mb-3">
+                                <span><i class="fas fa-bed text-primary me-1"></i> 1 Bed</span>
+                                <span><i class="fas fa-bath text-primary me-1"></i> 1 Bath</span>
+                                <span><i class="fas fa-ruler-combined text-primary me-1"></i> 30m²</span>
+                            </div>
+
+                            <p class="card-text">Beautiful self contain apartment with modern amenities, close to campus
+                                and shopping areas.</p>
+
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <h5 class="text-primary mb-0">₦180,000<span
+                                        class="text-muted small fw-normal">/year</span></h5>
+                                <a href="#" class="btn btn-sm btn-outline-primary">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Listing 2 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card listing-card h-100 shadow-sm border-0 overflow-hidden">
+                        <div class="position-relative">
+                            <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                                class="card-img-top" alt="2 Bedroom Apartment"
+                                style="height: 200px; object-fit: cover;">
+                            <div class="position-absolute top-0 end-0 m-2">
+                                <span class="badge bg-success">Verified</span>
+                            </div>
+                            <div class="position-absolute top-0 start-0 m-2">
+                                <button class="btn btn-light btn-sm rounded-circle"><i
+                                        class="far fa-heart"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">2 Bedroom Apartment</h5>
+                            <p class="text-muted mb-2"><i class="fas fa-map-marker-alt me-2"></i>North Gate Area</p>
+
+                            <div class="d-flex justify-content-between mb-3">
+                                <span><i class="fas fa-bed text-primary me-1"></i> 2 Beds</span>
+                                <span><i class="fas fa-bath text-primary me-1"></i> 2 Baths</span>
+                                <span><i class="fas fa-ruler-combined text-primary me-1"></i> 65m²</span>
+                            </div>
+
+                            <p class="card-text">Spacious 2 bedroom apartment with parking space, 24/7 security, and
+                                constant water supply.</p>
+
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <h5 class="text-primary mb-0">₦350,000<span
+                                        class="text-muted small fw-normal">/year</span></h5>
+                                <a href="#" class="btn btn-sm btn-outline-primary">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Listing 3 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card listing-card h-100 shadow-sm border-0 overflow-hidden">
+                        <div class="position-relative">
+                            <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                                class="card-img-top" alt="Single Room" style="height: 200px; object-fit: cover;">
+                            <div class="position-absolute top-0 end-0 m-2">
+                                <span class="badge bg-success">Verified</span>
+                            </div>
+                            <div class="position-absolute top-0 start-0 m-2">
+                                <button class="btn btn-light btn-sm rounded-circle"><i
+                                        class="far fa-heart"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Single Room in Shared Apartment</h5>
+                            <p class="text-muted mb-2"><i class="fas fa-map-marker-alt me-2"></i>West Gate Area</p>
+
+                            <div class="d-flex justify-content-between mb-3">
+                                <span><i class="fas fa-bed text-primary me-1"></i> 1 Bed</span>
+                                <span><i class="fas fa-bath text-primary me-1"></i> Shared Bath</span>
+                                <span><i class="fas fa-ruler-combined text-primary me-1"></i> 15m²</span>
+                            </div>
+
+                            <p class="card-text">Cozy single room in a shared apartment with 3 other students. Includes
+                                WiFi and cleaning services.</p>
+
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <h5 class="text-primary mb-0">₦120,000<span
+                                        class="text-muted small fw-normal">/year</span></h5>
+                                <a href="#" class="btn btn-sm btn-outline-primary">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Listing 4 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card listing-card h-100 shadow-sm border-0 overflow-hidden">
+                        <div class="position-relative">
+                            <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                                class="card-img-top" alt="Room and Parlor" style="height: 200px; object-fit: cover;">
+                            <div class="position-absolute top-0 end-0 m-2">
+                                <span class="badge bg-success">Verified</span>
+                            </div>
+                            <div class="position-absolute top-0 start-0 m-2">
+                                <button class="btn btn-light btn-sm rounded-circle"><i
+                                        class="far fa-heart"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Room and Parlor</h5>
+                            <p class="text-muted mb-2"><i class="fas fa-map-marker-alt me-2"></i>Town Area</p>
+
+                            <div class="d-flex justify-content-between mb-3">
+                                <span><i class="fas fa-bed text-primary me-1"></i> 2 Rooms</span>
+                                <span><i class="fas fa-bath text-primary me-1"></i> 1 Bath</span>
+                                <span><i class="fas fa-ruler-combined text-primary me-1"></i> 45m²</span>
+                            </div>
+
+                            <p class="card-text">Comfortable room and parlor setup with kitchenette. Perfect for
+                                students who want more space.</p>
+
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <h5 class="text-primary mb-0">₦250,000<span
+                                        class="text-muted small fw-normal">/year</span></h5>
+                                <a href="#" class="btn btn-sm btn-outline-primary">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Listing 5 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card listing-card h-100 shadow-sm border-0 overflow-hidden">
+                        <div class="position-relative">
+                            <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                                class="card-img-top" alt="3 Bedroom Apartment"
+                                style="height: 200px; object-fit: cover;">
+                            <div class="position-absolute top-0 end-0 m-2">
+                                <span class="badge bg-success">Verified</span>
+                            </div>
+                            <div class="position-absolute top-0 start-0 m-2">
+                                <button class="btn btn-light btn-sm rounded-circle"><i
+                                        class="far fa-heart"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">3 Bedroom Apartment</h5>
+                            <p class="text-muted mb-2"><i class="fas fa-map-marker-alt me-2"></i>South Gate Area</p>
+
+                            <div class="d-flex justify-content-between mb-3">
+                                <span><i class="fas fa-bed text-primary me-1"></i> 3 Beds</span>
+                                <span><i class="fas fa-bath text-primary me-1"></i> 2 Baths</span>
+                                <span><i class="fas fa-ruler-combined text-primary me-1"></i> 85m²</span>
+                            </div>
+
+                            <p class="card-text">Luxurious 3 bedroom apartment with modern finishes, generator backup,
+                                and dedicated parking.</p>
+
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <h5 class="text-primary mb-0">₦480,000<span
+                                        class="text-muted small fw-normal">/year</span></h5>
+                                <a href="#" class="btn btn-sm btn-outline-primary">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Listing 6 -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card listing-card h-100 shadow-sm border-0 overflow-hidden">
+                        <div class="position-relative">
+                            <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                                class="card-img-top" alt="Mini Flat" style="height: 200px; object-fit: cover;">
+                            <div class="position-absolute top-0 end-0 m-2">
+                                <span class="badge bg-success">Verified</span>
+                            </div>
+                            <div class="position-absolute top-0 start-0 m-2">
+                                <button class="btn btn-light btn-sm rounded-circle"><i
+                                        class="far fa-heart"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Mini Flat</h5>
+                            <p class="text-muted mb-2"><i class="fas fa-map-marker-alt me-2"></i>North Gate Area</p>
+
+                            <div class="d-flex justify-content-between mb-3">
+                                <span><i class="fas fa-bed text-primary me-1"></i> 1 Bed</span>
+                                <span><i class="fas fa-bath text-primary me-1"></i> 1 Bath</span>
+                                <span><i class="fas fa-ruler-combined text-primary me-1"></i> 40m²</span>
+                            </div>
+
+                            <p class="card-text">Well-furnished mini flat with kitchen and living area. Close to campus
+                                with easy transportation.</p>
+
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <h5 class="text-primary mb-0">₦220,000<span
+                                        class="text-muted small fw-normal">/year</span></h5>
+                                <a href="#" class="btn btn-sm btn-outline-primary">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <nav aria-label="Listings pagination" class="mt-5">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="section-padding gradient-bg text-white">
+        <div class="container text-center">
+            <h2 class="mb-4">Can't Find What You're Looking For?</h2>
+            <p class="lead mb-4">Contact us directly and we'll help you find the perfect accommodation</p>
+            <a href="#contact" class="btn btn-light btn-lg">Get Help Finding Housing</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5 text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
                     <h3>CampusCribs</h3>
-                    <p>The trusted student housing platform for FUTA students. We're committed to eliminating housing scams and providing safe, verified accommodation options.</p>
+                    <p>The trusted student housing platform for FUTA students. We're committed to eliminating housing
+                        scams and providing safe, verified accommodation options.</p>
                 </div>
-                <div class="footer-section">
+                <div class="col-lg-4 mb-4 mb-lg-0">
                     <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="index.html#home">Home</a></li>
-                        <li><a href="index.html#features">Features</a></li>
-                        <li><a href="index.html#search">Find Housing</a></li>
-                        <li><a href="listings">Listings</a></li>
-                        <li><a href="about">About Us</a></li>
-                        <li><a href="index.html#contact">Contact Us</a></li>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-decoration-none">Home</a></li>
+                        <li><a href="listings.html" class="text-decoration-none">House Listings</a></li>
+                        <li><a href="about.html" class="text-decoration-none">About Us</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
-                    <h3>For Students</h3>
-                    <ul>
-                        <li><a href="index.html#search">Browse Listings</a></li>
-                        <li><a href="tel:+2347077218825">Emergency Support</a></li>
-                        <li><a href="index.html#contact">Report Issues</a></li>
-                        <li><a href="index.html#features">How It Works</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
+                <div class="col-lg-4">
                     <h3>Connect With Us</h3>
-                    <ul>
-                        <li><a href="tel:+2347077218825">Call: (+234) 707-721-8825</a></li>
-                        <li><a href="https://wa.me/2347077218825">WhatsApp</a></li>
-                        <li><a href="mailto:campuscribs29@gmail.com">Email Us</a></li>
-                        <li><a href="https://www.instagram.com/campuscribs29">Instagram</a></li>
-                        <li><a href="https://www.facebook.com/share/1MLThncBEn/">Facebook</a></li>
-                        <li><a href="https://x.com/CampusCribs_ng">Twitter</a></li>
+                    <ul class="list-unstyled">
+                        <li><a href="tel:+2347077218825" class="text-decoration-none">Call: (+234) 707-721-8825</a></li>
+                        <li><a href="https://wa.me/message/KGLHD4FHQPTFA1" class="text-decoration-none">WhatsApp</a>
+                        </li>
+                        <li><a href="mailto:campuscribs29@gmail.com" class="text-decoration-none">Email Us</a></li>
+                        <li><a href="https://www.instagram.com/campuscribs29" class="text-decoration-none">Instagram</a>
+                        </li>
+                        <li><a href="https://www.facebook.com/share/1MLThncBEn/"
+                                class="text-decoration-none">Facebook</a></li>
+                        <li><a href="https://x.com/CampusCribs_ng" class="text-decoration-none">Twitter</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="footer-bottom">
+            <hr class="my-4">
+            <div class="text-center footer-bottom">
                 <p>&copy; 2025 CampusCribs. All rights reserved. Built with ❤️ for FUTA students.</p>
             </div>
         </div>
     </footer>
 
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./assets/js/main.js"></script>
+
 </body>
+
 </html>

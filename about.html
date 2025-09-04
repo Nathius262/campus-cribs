@@ -1,99 +1,339 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - Campus Cribs</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
+
 <body>
     <!-- Header -->
-    <header>
-        <nav class="navbar navbar-expand-lg container">
-            <a href="index.html" class="navbar-brand fw-bold text-white">Campus Cribs</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navMenu">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 nav-links">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#search">Find Housing</a></li>
-                    <li><a href="listings">Listings</a></li>
-                    <li><a href="about">About Us</a></li>
-                    <li><a href="#" id="auth-button">Login/Sign Up</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
+    <header class="gradient-bg fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-dark container">
+            <div class="container-fluid">
+                <a href="index.html" class="navbar-brand fw-bold logo">Campus Cribs</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navMenu">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="listings.html">House Listings</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="about.html">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#" id="auth-button">Login/Sign Up</a></li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>
 
+    <!-- Authentication Modal -->
+    <div class="modal fade" id="authModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Authentication</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul class="nav nav-tabs auth-tabs mb-3" id="authTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button" role="tab">Login</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="signup-tab" data-bs-toggle="tab" data-bs-target="#signup" type="button" role="tab">Sign Up</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="authTabsContent">
+                        <div class="tab-pane fade show active" id="login" role="tabpanel">
+                            <h3 class="text-center mb-4">Login to Your Account</h3>
+                            <form id="login-form">
+                                <div class="mb-3">
+                                    <label for="login-email" class="form-label">Email or Username</label>
+                                    <input type="text" class="form-control" id="login-email" name="email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="login-password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="login-password" name="password" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Login</button>
+                                <p class="text-center mt-3">Don't have an account? <a href="#" id="switch-to-signup">Sign up</a></p>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="signup" role="tabpanel">
+                            <h3 class="text-center mb-4">Create an Account</h3>
+                            <form id="signup-form">
+                                <div class="mb-3">
+                                    <label for="fullname" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="fullname" name="fullname" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="username" name="username" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="address" class="form-label">Address</label>
+                                    <input type="text" class="form-control" id="address" name="address">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Phone Number</label>
+                                    <input type="tel" class="form-control" id="phone" name="phone" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="student-status" class="form-label">Student Status</label>
+                                    <select class="form-select" id="student-status" name="student-status" required>
+                                        <option value="">Select Status</option>
+                                        <option value="fresher">Fresher</option>
+                                        <option value="returning">Returning Student</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="pref-location" class="form-label">Preferred Location</label>
+                                    <select class="form-select" id="pref-location" name="pref-location">
+                                        <option value="">Select Location</option>
+                                        <option value="south-gate">South Gate Area</option>
+                                        <option value="north-gate">North Gate Area</option>
+                                        <option value="west-gate">West Gate Area</option>
+                                        <option value="town">Town Area</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="budget-range" class="form-label">Budget Range (₦/year)</label>
+                                    <select class="form-select" id="budget-range" name="budget-range">
+                                        <option value="">Select Budget</option>
+                                        <option value="100000">Up to ₦100,000</option>
+                                        <option value="200000">Up to ₦200,000</option>
+                                        <option value="300000">Up to ₦300,000</option>
+                                        <option value="500000">Up to ₦500,000</option>
+                                        <option value="1000000">Above ₦500,000</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="room-pref" class="form-label">Room Type Preference</label>
+                                    <select class="form-select" id="room-pref" name="room-pref">
+                                        <option value="">Select Preference</option>
+                                        <option value="single">Single Room</option>
+                                        <option value="selfcon">A Room Self Con</option>
+                                        <option value="room-parlor">Room and Parlor</option>
+                                        <option value="apartment">1 Bedroom Apartment</option>
+                                        <option value="2bedroom">2 Bedroom Apartment</option>
+                                        <option value="3bedroom">3 Bedroom Apartment</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="signup-password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="signup-password" name="password" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="confirm-password" class="form-label">Confirm Password</label>
+                                    <input type="password" class="form-control" id="confirm-password" name="confirm-password" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+                                <p class="text-center mt-3">Already have an account? <a href="#" id="switch-to-login">Login</a></p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Header -->
+    <section class="page-header gradient-bg text-white py-5 mt-5">
+        <div class="container text-center">
+            <h1 class="mb-3">About Campus Cribs</h1>
+            <p class="lead">Your trusted partner for student housing at FUTA</p>
+        </div>
+    </section>
+
     <!-- About Content -->
-    <section class="hero">
+    <section class="section-padding bg-white">
         <div class="container">
-            <h1>About Campus Cribs</h1>
-            <p>Your trusted partner for student housing at FUTA</p>
-        </div>
-    </section>
-
-    <section class="features">
-        <div class="container">
-            <h2 class="section-title">Who We Are</h2>
-            <div class="text-center">
-                <p>We are a dedicated platform connecting FUTA students with safe, verified, and affordable housing options.</p>
-                <p>Our mission is to eliminate housing scams and provide a seamless experience for students to find their perfect accommodation.</p>
-                <p>With our cheap commissions and verified listings, we ensure both students and landlords have a positive experience.</p>
-                <a href="index.html#contact" class="cta-button">Get In Touch</a>
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h2 class="mb-4">Our Story</h2>
+                    <p class="lead">Founded with a mission to solve the housing challenges faced by FUTA students,
+                        Campus Cribs has become the most trusted platform for student accommodation.</p>
+                    <p>We understand the struggles of finding safe, affordable, and convenient housing near campus.
+                        That's why we've created a platform that connects students with verified landlords and
+                        properties, eliminating scams and ensuring a smooth housing search experience.</p>
+                    <p>Since our inception, we've helped thousands of students find their perfect home away from home,
+                        building a community based on trust, transparency, and reliability.</p>
+                </div>
+                <div class="col-lg-6">
+                    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                        alt="Student housing" class="img-fluid rounded shadow">
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer (same as main page) -->
-    <footer>
+    <!-- Mission & Vision -->
+    <section class="section-padding bg-light">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
+            <div class="row">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <img src="https://images.unsplash.com/photo-1572021335469-31706a17aaef?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                                alt="Our Mission" class="img-fluid rounded mb-3"
+                                style="height: 200px; width: 100%; object-fit: cover;">
+                            <h3 class="card-title">Our Mission</h3>
+                            <p class="card-text">To provide FUTA students with a secure, transparent, and efficient
+                                platform for finding verified housing options, eliminating scams and ensuring peace of
+                                mind throughout the accommodation search process.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center p-4">
+                            <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                                alt="Our Vision" class="img-fluid rounded mb-3"
+                                style="height: 200px; width: 100%; object-fit: cover;">
+                            <h3 class="card-title">Our Vision</h3>
+                            <p class="card-text">To become the leading student housing platform across Nigerian
+                                universities, setting the standard for reliability, transparency, and student-focused
+                                service in the off-campus accommodation industry.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="section-padding bg-white">
+        <div class="container">
+            <h2 class="text-center mb-5">Our Team</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card team-card border-0 shadow-sm h-100">
+                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+                            class="card-img-top" alt="Team Member" style="height: 250px; object-fit: cover;">
+                        <div class="card-body text-center">
+                            <h4 class="card-title">John Doe</h4>
+                            <p class="text-muted">Founder & CEO</p>
+                            <p class="card-text">With a passion for solving student challenges, John founded Campus
+                                Cribs to transform the housing search experience.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card team-card border-0 shadow-sm h-100">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+                            class="card-img-top" alt="Team Member" style="height: 250px; object-fit: cover;">
+                        <div class="card-body text-center">
+                            <h4 class="card-title">Jane Smith</h4>
+                            <p class="text-muted">Operations Manager</p>
+                            <p class="card-text">Jane ensures that every property listed on our platform meets our
+                                strict verification standards.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card team-card border-0 shadow-sm h-100">
+                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+                            class="card-img-top" alt="Team Member" style="height: 250px; object-fit: cover;">
+                        <div class="card-body text-center">
+                            <h4 class="card-title">Michael Johnson</h4>
+                            <p class="text-muted">Student Relations</p>
+                            <p class="card-text">Michael works directly with students to understand their needs and
+                                ensure they find the perfect accommodation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="section-padding gradient-bg text-white">
+        <div class="container">
+            <h2 class="text-center mb-5">Our Impact</h2>
+            <div class="row text-center">
+                <div class="col-6 col-md-3 mb-4">
+                    <div class="stat-item">
+                        <h3><i class="fas fa-home"></i> 500+</h3>
+                        <p>Verified Properties</p>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 mb-4">
+                    <div class="stat-item">
+                        <h3><i class="fas fa-users"></i> 3,000+</h3>
+                        <p>Students Housed</p>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 mb-4">
+                    <div class="stat-item">
+                        <h3><i class="fas fa-star"></i> 98%</h3>
+                        <p>Satisfaction Rate</p>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 mb-4">
+                    <div class="stat-item">
+                        <h3><i class="fas fa-calendar-alt"></i> 5+</h3>
+                        <p>Years of Service</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5 text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
                     <h3>CampusCribs</h3>
-                    <p>The trusted student housing platform for FUTA students. We're committed to eliminating housing scams and providing safe, verified accommodation options.</p>
+                    <p>The trusted student housing platform for FUTA students. We're committed to eliminating housing
+                        scams and providing safe, verified accommodation options.</p>
                 </div>
-                <div class="footer-section">
+                <div class="col-lg-4 mb-4 mb-lg-0">
                     <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="index.html#home">Home</a></li>
-                        <li><a href="index.html#features">Features</a></li>
-                        <li><a href="index.html#search">Find Housing</a></li>
-                        <li><a href="listings">Listings</a></li>
-                        <li><a href="about">About Us</a></li>
-                        <li><a href="index.html#contact">Contact Us</a></li>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-decoration-none">Home</a></li>
+                        <li><a href="listings.html" class="text-decoration-none">House Listings</a></li>
+                        <li><a href="about.html" class="text-decoration-none">About Us</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
-                    <h3>For Students</h3>
-                    <ul>
-                        <li><a href="index.html#search">Browse Listings</a></li>
-                        <li><a href="tel:+2347077218825">Emergency Support</a></li>
-                        <li><a href="index.html#contact">Report Issues</a></li>
-                        <li><a href="index.html#features">How It Works</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
+                <div class="col-lg-4">
                     <h3>Connect With Us</h3>
-                    <ul>
-                        <li><a href="tel:+2347077218825">Call: (+234) 707-721-8825</a></li>
-                        <li><a href="https://wa.me/2347077218825">WhatsApp</a></li>
-                        <li><a href="mailto:campuscribs29@gmail.com">Email Us</a></li>
-                        <li><a href="https://www.instagram.com/campuscribs29">Instagram</a></li>
-                        <li><a href="https://www.facebook.com/share/1MLThncBEn/">Facebook</a></li>
-                        <li><a href="https://x.com/CampusCribs_ng">Twitter</a></li>
+                    <ul class="list-unstyled">
+                        <li><a href="tel:+2347077218825" class="text-decoration-none">Call: (+234) 707-721-8825</a></li>
+                        <li><a href="https://wa.me/message/KGLHD4FHQPTFA1" class="text-decoration-none">WhatsApp</a>
+                        </li>
+                        <li><a href="mailto:campuscribs29@gmail.com" class="text-decoration-none">Email Us</a></li>
+                        <li><a href="https://www.instagram.com/campuscribs29" class="text-decoration-none">Instagram</a>
+                        </li>
+                        <li><a href="https://www.facebook.com/share/1MLThncBEn/"
+                                class="text-decoration-none">Facebook</a></li>
+                        <li><a href="https://x.com/CampusCribs_ng" class="text-decoration-none">Twitter</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="footer-bottom">
+            <hr class="my-4">
+            <div class="text-center footer-bottom">
                 <p>&copy; 2025 CampusCribs. All rights reserved. Built with ❤️ for FUTA students.</p>
             </div>
         </div>
     </footer>
 
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./assets/js/main.js"></script>
+
 </body>
+
 </html>
